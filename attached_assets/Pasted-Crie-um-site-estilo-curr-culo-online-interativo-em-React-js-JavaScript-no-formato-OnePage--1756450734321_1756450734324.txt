@@ -1,0 +1,51 @@
+Crie um site estilo currículo online interativo em **React.js (JavaScript)** no formato **OnePage**.  
+O site deve ser moderno, responsivo e conter animações elegantes (typing effect, fade-in, transições suaves).  
+
+### Estrutura de Sessões:
+1. **Hero Section (Apresentação):**
+   - Nome completo: David Amorim Xavier (usar "David Xavier" em destaque).
+   - Frase com efeito typing: "Full Stack Developer | React.js | Node.js | WordPress".
+   - Botão "Baixar Currículo (PDF)" e botão "Entrar em Contato".
+   - Imagem simulada (placeholder) no estilo programador criativo.
+
+2. **Minha História (Resumo Profissional):**
+   - Usar o texto abaixo em um card estilizado, com animações de entrada:
+   "Desde cedo tive interesse por tecnologia: comecei a explorar computadores aos 9 anos, ainda no Windows 98. Aos 14 anos, ingressei na SOS Computadores, onde conclui dois cursos: Design Gráfico (Photoshop CS4, Illustrator e pacote Adobe) e Programação Web (HTML, CSS no DreamWeaver e Flash). No mesmo período, iniciei como Técnico em Informática na ProrSoft. Aos 18, lecionei na Microlins. Aos 19, fundei a Agência Hina, que criou o site oficial da Suzuki Motos do Brasil (SuzukiMotos.com.br). Em 2018, fundei a XD Plans, onde desenvolvo soluções digitais, e a plataforma XD Press. Hoje, com 30 anos, acumulo mais de 10 anos de experiência em programação, especializado em React.js, Node.js, PHP e criação de plugins/temas para WordPress."
+
+3. **Experiência Profissional:**
+   - Timeline interativa com:
+     - XD Plans (2018 – atual) – Fundador & Full Stack Developer
+     - Agência Hina (2014 – 2018) – Co-Fundador & Programador
+     - Microlins (2013 – 2014) – Professor de Informática
+     - ProrSoft (2009 – 2012) – Técnico em Informática
+
+4. **Habilidades Técnicas:**
+   - Grade de ícones animados para: JavaScript, React.js, Node.js, React Native, PHP, WordPress, WooCommerce, MySQL, MongoDB, Firebase, Git, SEO, UX/UI.
+
+5. **Cursos e Certificados:**
+   - FreeCodeCamp – Full Stack Development (300 horas).
+   - Outros cursos de WordPress, Marketing Digital e SEO.
+
+6. **Idiomas:**
+   - Português – Nativo
+   - Inglês – Intermediário
+   - Espanhol – Básico
+
+7. **Contato:**
+   - Mostrar telefone, email, GitHub, Instagram.
+   - Formulário de contato estilizado.
+   - Botão de LinkedIn (placeholder para depois).
+
+### Requisitos Visuais:
+- Usar **TailwindCSS** para estilização.
+- Layout minimalista, com cores escuras (dark mode elegante).
+- Componentes com bordas arredondadas, sombras suaves e transições fluidas.
+- Animações com **Framer Motion** (scroll reveal, hover effects).
+- Scroll suave entre seções (OnePage).
+- Navbar fixa no topo com links para cada seção.
+
+### Observações:
+- Todas as imagens devem ser simuladas (placeholders) para serem trocadas depois.
+- Código em JavaScript (não usar TypeScript).
+- Estrutura limpa e modularizada em componentes React.
+- Focar em um design original, diferenciado e atrativo.

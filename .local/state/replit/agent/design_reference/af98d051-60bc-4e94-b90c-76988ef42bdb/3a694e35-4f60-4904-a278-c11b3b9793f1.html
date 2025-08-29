@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Xavier - Full Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                    colors: {
+                        background: "var(--background)",
+                        foreground: "var(--foreground)",
+                        card: {
+                            DEFAULT: "var(--card)",
+                            foreground: "var(--card-foreground)",
+                        },
+                        primary: {
+                            DEFAULT: "var(--primary)",
+                            foreground: "var(--primary-foreground)",
+                        },
+                        secondary: {
+                            DEFAULT: "var(--secondary)",
+                            foreground: "var(--secondary-foreground)",
+                        },
+                        muted: {
+                            DEFAULT: "var(--muted)",
+                            foreground: "var(--muted-foreground)",
+                        },
+                        accent: {
+                            DEFAULT: "var(--accent)",
+                            foreground: "var(--accent-foreground)",
+                        },
+                        border: "var(--border)",
+                        input: "var(--input)",
+                        ring: "var(--ring)",
+                    },
+                    fontFamily: {
+                        sans: ["var(--font-sans)"],
+                    },
+                    animation: {
+                        'typing': 'typing 3.5s steps(30, end), blink-caret .75s step-end infinite',
+                        'fadeInUp': 'fadeInUp 0.6s ease-out forwards',
+                        'slideInLeft': 'slideInLeft 0.8s ease-out forwards',
+                        'slideInRight': 'slideInRight 0.8s ease-out forwards',
+                        'bounce-slow': 'bounce 2s infinite',
+                    },
+                    keyframes: {
+                        typing: {
+                            'from': { width: '0' },
+                            'to': { width: '100%' }
+                        },
+                        'blink-caret': {
+                            'from, to': { 'border-color': 'transparent' },
+                            '50%': { 'border-color': '#06b6d4' }
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(50px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
+                        }
+                    }
+                },
+            }
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --background: hsl(222 84% 5%);
+            --foreground: hsl(210 40% 98%);
+            --card: hsl(222 84% 5%);
+            --card-foreground: hsl(210 40% 98%);
+            --primary: hsl(217 91% 60%);
+            --primary-foreground: hsl(222 84% 5%);
+            --secondary: hsl(215 32% 27%);
+            --secondary-foreground: hsl(210 40% 98%);
+            --muted: hsl(215 32% 27%);
+            --muted-foreground: hsl(215 20% 65%);
+            --accent: hsl(187 92% 39%);
+            --accent-foreground: hsl(222 84% 5%);
+            --border: hsl(215 32% 27%);
+            --input: hsl(215 32% 27%);
+            --ring: hsl(217 91% 60%);
+            --radius: 0.75rem;
+            --font-sans: 'Inter', system-ui, sans-serif;
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--background);
+            color: var(--foreground);
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid hsl(187 92% 39%);
+            animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+        }
+
+        .skill-icon {
+            transition: all 0.3s ease;
+        }
+
+        .skill-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        .timeline-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .navbar-blur {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(15, 23, 42, 0.8);
+        }
+
+        .section-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground">
+    <!-- Language Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="langToggle" class="bg-secondary hover:bg-accent text-foreground px-3 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg">
+            <i class="fas fa-globe"></i>
+            <span id="currentLang">PT</span>
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 navbar-blur border-b border-border">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-bold text-accent">David Xavier</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#hero" class="text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Início" data-en="Home">Início</a>
+                    <a href="#about" class="text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="História" data-en="About">História</a>
+                    <a href="#experience" class="text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Experiência" data-en="Experience">Experiência</a>
+                    <a href="#skills" class="text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Habilidades" data-en="Skills">Habilidades</a>
+                    <a href="#education" class="text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Cursos" data-en="Education">Cursos</a>
+                    <a href="#contact" class="text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Contato" data-en="Contact">Contato</a>
+                </div>
+                <button id="mobileMenuToggle" class="md:hidden text-foreground">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-background border-t border-border">
+            <div class="container mx-auto px-6 py-4 space-y-4">
+                <a href="#hero" class="block text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Início" data-en="Home">Início</a>
+                <a href="#about" class="block text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="História" data-en="About">História</a>
+                <a href="#experience" class="block text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Experiência" data-en="Experience">Experiência</a>
+                <a href="#skills" class="block text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Habilidades" data-en="Skills">Habilidades</a>
+                <a href="#education" class="block text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Cursos" data-en="Education">Cursos</a>
+                <a href="#contact" class="block text-muted-foreground hover:text-accent transition-colors duration-300" data-pt="Contato" data-en="Contact">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center pt-20 section-fade">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div class="flex-1 text-left">
+                    <h1 class="text-5xl lg:text-7xl font-bold mb-6 animate-fadeInUp">
+                        David <span class="text-accent">Xavier</span>
+                    </h1>
+                    <div class="text-xl lg:text-2xl text-muted-foreground mb-8 h-16">
+                        <div class="typing-animation" data-pt="Full Stack Developer | React.js | Node.js | WordPress" data-en="Full Stack Developer | React.js | Node.js | WordPress">
+                            Full Stack Developer | React.js | Node.js | WordPress
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-4 animate-slideInLeft" style="animation-delay: 1s;">
+                        <button class="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                            <i class="fas fa-download"></i>
+                            <span data-pt="Baixar Currículo (PDF)" data-en="Download Resume (PDF)">Baixar Currículo (PDF)</span>
+                        </button>
+                        <button class="bg-secondary hover:bg-accent text-foreground px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                            <i class="fas fa-envelope"></i>
+                            <span data-pt="Entrar em Contato" data-en="Get In Touch">Entrar em Contato</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-1 animate-slideInRight" style="animation-delay: 0.5s;">
+                    <!-- Professional developer portrait placeholder -->
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800" 
+                         alt="David Xavier - Full Stack Developer" 
+                         class="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-4 border-accent" 
+                         data-mock-image="true" 
+                         data-implementation="Replace with David's professional photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 section-fade">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 text-accent" data-pt="Minha História" data-en="My Story">Minha História</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-secondary rounded-xl p-8 shadow-2xl border border-border">
+                    <p class="text-lg leading-relaxed text-muted-foreground" data-pt="Desde cedo tive interesse por tecnologia: comecei a explorar computadores aos 9 anos, ainda no Windows 98. Aos 14 anos, ingressei na SOS Computadores, onde conclui dois cursos: Design Gráfico (Photoshop CS4, Illustrator e pacote Adobe) e Programação Web (HTML, CSS no DreamWeaver e Flash). No mesmo período, iniciei como Técnico em Informática na ProrSoft. Aos 18, lecionei na Microlins. Aos 19, fundei a Agência Hina, que criou o site oficial da Suzuki Motos do Brasil. Hoje, aos 30 anos, sou fundador da XD Plans, focada em soluções digitais completas com React.js, Node.js e WordPress." data-en="From an early age, I showed interest in technology: I started exploring computers at age 9, back on Windows 98. At 14, I joined SOS Computadores, where I completed two courses: Graphic Design (Photoshop CS4, Illustrator and Adobe suite) and Web Programming (HTML, CSS in DreamWeaver and Flash). At the same time, I started as an IT Technician at ProrSoft. At 18, I taught at Microlins. At 19, I founded Agência Hina, which created the official website for Suzuki Motorcycles Brazil. Today, at 30 years old, I'm the founder of XD Plans, focused on complete digital solutions with React.js, Node.js and WordPress.">
+                        Desde cedo tive interesse por tecnologia: comecei a explorar computadores aos 9 anos, ainda no Windows 98. Aos 14 anos, ingressei na SOS Computadores, onde conclui dois cursos: Design Gráfico (Photoshop CS4, Illustrator e pacote Adobe) e Programação Web (HTML, CSS no DreamWeaver e Flash). No mesmo período, iniciei como Técnico em Informática na ProrSoft. Aos 18, lecionei na Microlins. Aos 19, fundei a Agência Hina, que criou o site oficial da Suzuki Motos do Brasil. Hoje, aos 30 anos, sou fundador da XD Plans, focada em soluções digitais completas com React.js, Node.js e WordPress.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-secondary/20 section-fade">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 text-accent" data-pt="Experiência Profissional" data-en="Professional Experience">Experiência Profissional</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-accent"></div>
+                    
+                    <!-- Experience Items -->
+                    <div class="space-y-12">
+                        <!-- XD Plans -->
+                        <div class="timeline-item relative flex items-start gap-6">
+                            <div class="relative z-10 w-16 h-16 bg-accent rounded-full flex items-center justify-center text-accent-foreground font-bold border-4 border-background">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="flex-1 bg-secondary rounded-xl p-6 shadow-lg border border-border">
+                                <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-2 mb-4">
+                                    <h3 class="text-xl font-bold text-foreground">XD Plans</h3>
+                                    <span class="text-accent font-semibold">2018 – atual</span>
+                                </div>
+                                <p class="text-accent text-sm mb-2" data-pt="Fundador & Full Stack Developer" data-en="Founder & Full Stack Developer">Fundador & Full Stack Developer</p>
+                                <p class="text-muted-foreground" data-pt="Empresa focada em soluções digitais completas, desenvolvimento de sistemas web e mobile." data-en="Company focused on complete digital solutions, web and mobile systems development.">Empresa focada em soluções digitais completas, desenvolvimento de sistemas web e mobile.</p>
+                            </div>
+                        </div>
+
+                        <!-- Agência Hina -->
+                        <div class="timeline-item relative flex items-start gap-6">
+                            <div class="relative z-10 w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold border-4 border-background">
+                                <i class="fas fa-paint-brush"></i>
+                            </div>
+                            <div class="flex-1 bg-secondary rounded-xl p-6 shadow-lg border border-border">
+                                <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-2 mb-4">
+                                    <h3 class="text-xl font-bold text-foreground">Agência Hina</h3>
+                                    <span class="text-accent font-semibold">2014 – 2018</span>
+                                </div>
+                                <p class="text-accent text-sm mb-2" data-pt="Co-Fundador & Programador" data-en="Co-Founder & Developer">Co-Fundador & Programador</p>
+                                <p class="text-muted-foreground" data-pt="Criação do site oficial da Suzuki Motos do Brasil e outros projetos web de grande escala." data-en="Creation of the official website for Suzuki Motorcycles Brazil and other large-scale web projects.">Criação do site oficial da Suzuki Motos do Brasil e outros projetos web de grande escala.</p>
+                            </div>
+                        </div>
+
+                        <!-- Microlins -->
+                        <div class="timeline-item relative flex items-start gap-6">
+                            <div class="relative z-10 w-16 h-16 bg-secondary rounded-full flex items-center justify-center text-secondary-foreground font-bold border-4 border-background">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div class="flex-1 bg-secondary rounded-xl p-6 shadow-lg border border-border">
+                                <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-2 mb-4">
+                                    <h3 class="text-xl font-bold text-foreground">Microlins</h3>
+                                    <span class="text-accent font-semibold">2013 – 2014</span>
+                                </div>
+                                <p class="text-accent text-sm mb-2" data-pt="Professor de Informática" data-en="Computer Science Instructor">Professor de Informática</p>
+                                <p class="text-muted-foreground" data-pt="Ensino de tecnologia e programação para jovens e adultos." data-en="Teaching technology and programming to young adults and adults.">Ensino de tecnologia e programação para jovens e adultos.</p>
+                            </div>
+                        </div>
+
+                        <!-- ProrSoft -->
+                        <div class="timeline-item relative flex items-start gap-6">
+                            <div class="relative z-10 w-16 h-16 bg-muted rounded-full flex items-center justify-center text-muted-foreground font-bold border-4 border-background">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="flex-1 bg-secondary rounded-xl p-6 shadow-lg border border-border">
+                                <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-2 mb-4">
+                                    <h3 class="text-xl font-bold text-foreground">ProrSoft</h3>
+                                    <span class="text-accent font-semibold">2009 – 2012</span>
+                                </div>
+                                <p class="text-accent text-sm mb-2" data-pt="Técnico em Informática" data-en="IT Technician">Técnico em Informática</p>
+                                <p class="text-muted-foreground" data-pt="Suporte técnico, manutenção de sistemas e desenvolvimento de soluções." data-en="Technical support, system maintenance and solution development.">Suporte técnico, manutenção de sistemas e desenvolvimento de soluções.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 section-fade">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 text-accent" data-pt="Habilidades Técnicas" data-en="Technical Skills">Habilidades Técnicas</h2>
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
+                    <!-- JavaScript -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fab fa-js-square text-4xl text-yellow-400 mb-4"></i>
+                        <p class="text-sm font-semibold">JavaScript</p>
+                    </div>
+                    <!-- React -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fab fa-react text-4xl text-cyan-400 mb-4"></i>
+                        <p class="text-sm font-semibold">React.js</p>
+                    </div>
+                    <!-- Node.js -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fab fa-node-js text-4xl text-green-500 mb-4"></i>
+                        <p class="text-sm font-semibold">Node.js</p>
+                    </div>
+                    <!-- React Native -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fab fa-react text-4xl text-blue-400 mb-4"></i>
+                        <p class="text-sm font-semibold">React Native</p>
+                    </div>
+                    <!-- PHP -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fab fa-php text-4xl text-purple-500 mb-4"></i>
+                        <p class="text-sm font-semibold">PHP</p>
+                    </div>
+                    <!-- WordPress -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fab fa-wordpress text-4xl text-blue-600 mb-4"></i>
+                        <p class="text-sm font-semibold">WordPress</p>
+                    </div>
+                    <!-- WooCommerce -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fas fa-shopping-cart text-4xl text-accent mb-4"></i>
+                        <p class="text-sm font-semibold">WooCommerce</p>
+                    </div>
+                    <!-- MySQL -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fas fa-database text-4xl text-orange-500 mb-4"></i>
+                        <p class="text-sm font-semibold">MySQL</p>
+                    </div>
+                    <!-- MongoDB -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fas fa-leaf text-4xl text-green-600 mb-4"></i>
+                        <p class="text-sm font-semibold">MongoDB</p>
+                    </div>
+                    <!-- Firebase -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fas fa-fire text-4xl text-yellow-500 mb-4"></i>
+                        <p class="text-sm font-semibold">Firebase</p>
+                    </div>
+                    <!-- Git -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fab fa-git-alt text-4xl text-red-500 mb-4"></i>
+                        <p class="text-sm font-semibold">Git</p>
+                    </div>
+                    <!-- SEO -->
+                    <div class="skill-icon bg-secondary rounded-xl p-6 text-center shadow-lg border border-border cursor-pointer">
+                        <i class="fas fa-search text-4xl text-accent mb-4"></i>
+                        <p class="text-sm font-semibold">SEO</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 bg-secondary/20 section-fade">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 text-accent" data-pt="Cursos e Certificados" data-en="Courses & Certifications">Cursos e Certificados</h2>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                <div class="bg-secondary rounded-xl p-6 shadow-lg border border-border">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-certificate text-accent text-2xl"></i>
+                        <h3 class="text-xl font-bold">FreeCodeCamp</h3>
+                    </div>
+                    <p class="text-accent mb-2" data-pt="Full Stack Development" data-en="Full Stack Development">Full Stack Development</p>
+                    <p class="text-muted-foreground text-sm">300 horas</p>
+                </div>
+                <div class="bg-secondary rounded-xl p-6 shadow-lg border border-border">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fab fa-wordpress text-accent text-2xl"></i>
+                        <h3 class="text-xl font-bold">WordPress</h3>
+                    </div>
+                    <p class="text-accent mb-2" data-pt="Desenvolvimento Avançado" data-en="Advanced Development">Desenvolvimento Avançado</p>
+                    <p class="text-muted-foreground text-sm" data-pt="Certificação profissional" data-en="Professional certification">Certificação profissional</p>
+                </div>
+                <div class="bg-secondary rounded-xl p-6 shadow-lg border border-border">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-chart-line text-accent text-2xl"></i>
+                        <h3 class="text-xl font-bold" data-pt="Marketing Digital" data-en="Digital Marketing">Marketing Digital</h3>
+                    </div>
+                    <p class="text-accent mb-2" data-pt="SEO e Análise de Dados" data-en="SEO & Data Analysis">SEO e Análise de Dados</p>
+                    <p class="text-muted-foreground text-sm" data-pt="Google Analytics e AdWords" data-en="Google Analytics & AdWords">Google Analytics e AdWords</p>
+                </div>
+                <div class="bg-secondary rounded-xl p-6 shadow-lg border border-border">
+                    <div class="flex items-center gap-4 mb-4">
+                        <i class="fas fa-paint-brush text-accent text-2xl"></i>
+                        <h3 class="text-xl font-bold" data-pt="Design Gráfico" data-en="Graphic Design">Design Gráfico</h3>
+                    </div>
+                    <p class="text-accent mb-2">Adobe Creative Suite</p>
+                    <p class="text-muted-foreground text-sm">Photoshop, Illustrator, InDesign</p>
+                </div>
+            </div>
+            
+            <!-- Languages -->
+            <div class="mt-16">
+                <h3 class="text-2xl font-bold text-center mb-8 text-foreground" data-pt="Idiomas" data-en="Languages">Idiomas</h3>
+                <div class="max-w-2xl mx-auto grid md:grid-cols-3 gap-6">
+                    <div class="bg-secondary rounded-xl p-6 text-center shadow-lg border border-border">
+                        <i class="fas fa-flag text-3xl text-green-500 mb-4"></i>
+                        <h4 class="font-bold mb-2" data-pt="Português" data-en="Portuguese">Português</h4>
+                        <p class="text-muted-foreground" data-pt="Nativo" data-en="Native">Nativo</p>
+                    </div>
+                    <div class="bg-secondary rounded-xl p-6 text-center shadow-lg border border-border">
+                        <i class="fas fa-flag text-3xl text-blue-500 mb-4"></i>
+                        <h4 class="font-bold mb-2" data-pt="Inglês" data-en="English">Inglês</h4>
+                        <p class="text-muted-foreground" data-pt="Intermediário" data-en="Intermediate">Intermediário</p>
+                    </div>
+                    <div class="bg-secondary rounded-xl p-6 text-center shadow-lg border border-border">
+                        <i class="fas fa-flag text-3xl text-red-500 mb-4"></i>
+                        <h4 class="font-bold mb-2" data-pt="Espanhol" data-en="Spanish">Espanhol</h4>
+                        <p class="text-muted-foreground" data-pt="Básico" data-en="Basic">Básico</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 section-fade">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 text-accent" data-pt="Contato" data-en="Contact">Contato</h2>
+            <div class="max-w-4xl mx-auto grid lg:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-accent-foreground">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold" data-pt="Telefone" data-en="Phone">Telefone</h3>
+                            <p class="text-muted-foreground" data-mock="true">+55 (11) 99999-9999</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-accent-foreground">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Email</h3>
+                            <p class="text-muted-foreground" data-mock="true">david.xavier@email.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-accent-foreground">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">GitHub</h3>
+                            <p class="text-muted-foreground" data-mock="true">github.com/davidxavier</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-accent-foreground">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Instagram</h3>
+                            <p class="text-muted-foreground" data-mock="true">@davidxavierdev</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-accent-foreground">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">LinkedIn</h3>
+                            <p class="text-muted-foreground" data-pt="Em breve" data-en="Coming soon">Em breve</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-secondary rounded-xl p-8 shadow-2xl border border-border">
+                    <h3 class="text-xl font-bold mb-6" data-pt="Envie uma mensagem" data-en="Send a message">Envie uma mensagem</h3>
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium mb-2" data-pt="Nome" data-en="Name">Nome</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring transition-colors" data-pt placeholder="Seu nome completo" data-en placeholder="Your full name">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring transition-colors" data-pt placeholder="seu.email@exemplo.com" data-en placeholder="your.email@example.com">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium mb-2" data-pt="Mensagem" data-en="Message">Mensagem</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ring transition-colors resize-none" data-pt placeholder="Sua mensagem..." data-en placeholder="Your message..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-accent hover:bg-accent/90 text-accent-foreground px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                            <span data-pt="Enviar Mensagem" data-en="Send Message">Enviar Mensagem</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-secondary border-t border-border">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-muted-foreground">
+                <span data-pt="© 2024 David Xavier. Todos os direitos reservados." data-en="© 2024 David Xavier. All rights reserved.">© 2024 David Xavier. Todos os direitos reservados.</span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle Functionality
+        const langToggle = document.getElementById('langToggle');
+        const currentLangSpan = document.getElementById('currentLang');
+        let currentLang = 'pt';
+
+        const translations = {
+            pt: {
+                'Início': 'Início',
+                'História': 'História',
+                'Experiência': 'Experiência',
+                'Habilidades': 'Habilidades',
+                'Cursos': 'Cursos',
+                'Contato': 'Contato'
+            },
+            en: {
+                'Home': 'Home',
+                'About': 'About',
+                'Experience': 'Experience',
+                'Skills': 'Skills',
+                'Education': 'Education',
+                'Contact': 'Contact'
+            }
+        };
+
+        function switchLanguage() {
+            currentLang = currentLang === 'pt' ? 'en' : 'pt';
+            currentLangSpan.textContent = currentLang.toUpperCase();
+            
+            // Update all elements with data-pt and data-en attributes
+            const elements = document.querySelectorAll('[data-pt][data-en]');
+            elements.forEach(element => {
+                const ptText = element.getAttribute('data-pt');
+                const enText = element.getAttribute('data-en');
+                
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    element.placeholder = currentLang === 'pt' ? ptText : enText;
+                } else {
+                    element.textContent = currentLang === 'pt' ? ptText : enText;
+                }
+            });
+            
+            // Update typing animation
+            const typingElement = document.querySelector('.typing-animation');
+            if (typingElement) {
+                const ptText = typingElement.getAttribute('data-pt');
+                const enText = typingElement.getAttribute('data-en');
+                typingElement.textContent = currentLang === 'pt' ? ptText : enText;
+            }
+        }
+
+        langToggle.addEventListener('click', switchLanguage);
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                // Close mobile menu if open
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate timeline items
+                    if (entry.target.id === 'experience') {
+                        const timelineItems = entry.target.querySelectorAll('.timeline-item');
+                        timelineItems.forEach((item, index) => {
+                            setTimeout(() => {
+                                item.classList.add('animate');
+                            }, index * 200);
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all section elements
+        document.querySelectorAll('.section-fade').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Contact form submission (placeholder functionality)
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // TODO: Implement form submission logic
+            alert(currentLang === 'pt' ? 'Mensagem enviada com sucesso!' : 'Message sent successfully!');
+        });
+
+        // Add typing effect restart on language change
+        function restartTypingAnimation() {
+            const typingElement = document.querySelector('.typing-animation');
+            if (typingElement) {
+                typingElement.style.animation = 'none';
+                typingElement.offsetHeight; // Trigger reflow
+                typingElement.style.animation = 'typing 3.5s steps(30, end), blink-caret .75s step-end infinite';
+            }
+        }
+
+        // Initial animations when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('#hero').classList.add('visible');
+            }, 100);
+        });
+    </script>
+</body>
+</html>
