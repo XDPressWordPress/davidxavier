@@ -1,8 +1,7 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 
-const Footer = () => {
-  const { t } = useLanguage();
+const Footer = () => {  const { currentLang, switchLanguage, t } = useLanguage();
 
   return (
     <motion.footer 
@@ -16,6 +15,16 @@ const Footer = () => {
         <p className="text-muted-foreground" data-testid="footer-copyright">
           {t('footer.copyright')}
         </p>
+
+        {/* Language Toggle */}
+ <div className="flex justify-center items-center gap-2 mt-4">
+ <button
+ onClick={switchLanguage}
+ className="text-muted-foreground hover:text-accent transition-colors duration-300"
+ data-testid="language-toggle">
+ {currentLang.toUpperCase()}
+ </button>
+ </div>
       </div>
     </motion.footer>
   );

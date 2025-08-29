@@ -16,7 +16,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <LanguageProvider>
+    <LanguageProvider><div className="bg-background text-foreground overflow-x-hidden">
       <div className="bg-background text-foreground">
         <Navbar />
         <main>
@@ -29,7 +29,7 @@ const HomePage = () => {
         </main>
         <Footer />
       </div>
-    </LanguageProvider>
+    </div></LanguageProvider>
   );
 };
 

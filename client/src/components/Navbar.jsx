@@ -26,20 +26,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Language Toggle */}
-      <div className="fixed top-4 right-4 z-50">
-        <motion.button 
-          onClick={switchLanguage}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-secondary hover:bg-accent text-foreground px-3 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg"
-          data-testid="language-toggle"
-        >
-          <Globe size={16} />
-          <span>{currentLang.toUpperCase()}</span>
-        </motion.button>
-      </div>
-
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-40 navbar-blur border-b border-border">
         <div className="container mx-auto px-6 py-4">
