@@ -77,11 +77,10 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="flex-1"
           >
-            <img
+           <img
   src="/images/davidxavier.jpg"
   alt="David Xavier - Full Stack Developer"
   className="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-4 border-accent"
-  data-testid="hero-profile-image"
 />
 
           </motion.div>
