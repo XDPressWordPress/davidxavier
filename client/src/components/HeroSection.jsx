@@ -77,12 +77,13 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="flex-1"
           >
-            <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=800" 
-              alt="David Xavier - Full Stack Developer" 
-              className="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-4 border-accent" 
-              data-testid="hero-profile-image"
-            />
+            <img
+  src="/images/davidxavier.jpg"
+  alt="David Xavier - Full Stack Developer"
+  className="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-4 border-accent"
+  data-testid="hero-profile-image"
+/>
+
           </motion.div>
         </div>
       </div>
