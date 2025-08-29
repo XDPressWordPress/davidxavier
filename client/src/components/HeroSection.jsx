@@ -78,7 +78,7 @@ const HeroSection = () => {
             className="flex-1"
           >
            <img
-  src="/images/davidxavier.jpg"
+  src="https://scontent.fcgh12-1.fna.fbcdn.net/v/t39.30808-6/492004616_2236795813442956_2367005914220249827_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGkZTkkRcTfI8VaV06bwdlH5HETDgVI3U7kcRMOBUjdTmAtVTAtwBNq0ZeMYzdTNJObBHD0NzdXdTTH1MpPep1-&_nc_ohc=K7lS27qYBLsQ7kNvwHLn_o_&_nc_oc=AdlA9GroH7s4SLnM1I4ZBiZ2dq0wQI11g2ZyiQD1XGjTkxu5QMPB8j4abcEHtKotsGs_R6_7ESN12kYgR9su_9T5&_nc_zt=23&_nc_ht=scontent.fcgh12-1.fna&_nc_gid=lO0rES3YckBN0tgqgUxeuQ&oh=00_AfXT2bp0ZfsuQV47d95LqQga01xgJmgzO9uvv1fKEqyAtg&oe=68B73347"
   alt="David Xavier - Full Stack Developer"
   className="rounded-full w-80 h-80 object-cover mx-auto shadow-2xl border-4 border-accent"
 />
